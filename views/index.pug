@@ -1,0 +1,40 @@
+extends layout
+
+block content
+  div.row.d-flex.justify-content-between.align-items-center.shadow-sm.border-bottom(id=user_id class='user_id')
+    div.col-auto
+      img.img-responsive(src='images/icon.png' width='50' alt='Logo')
+    div.col-auto.d-flex.align-items-center
+      img.rounded-circle.border.d-flex(src=image width='45' height='45' id="profile-img" alt='User profile picture' data-bs-toggle="modal" data-bs-target="#modalUpload")
+      span.mx-3(id="name") #{name}
+      a.text-decoration-none.h4.m-0(href='logout')
+        i.fa-solid.fa-right-from-bracket.text-dark
+        form(action="/todo/upload" method="post" enctype="multipart/form-data")
+  form(action="/upload" method="post" enctype="multipart/form-data")
+    div.modal.fade#modalUpload(tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true")
+      div.modal-dialog.modal-dialog-centered(role="document")
+        div.modal-content
+          div.modal-header
+            h5.modal-title#exampleModalLabel Change profile image
+            button.btn-close(type="button" data-bs-dismiss="modal" aria-label="Close")
+          div.modal-body
+            div.form-group
+              input.form-control(type="file" name="image" required)
+          div.modal-footer
+            button.btn.btn-secondary(type="button" data-bs-dismiss="modal") Cancel
+            button.btn.btn-success(type="submit") Save
+  div.row.justify-content-center.align-items-center
+    div.border.rounded.shadow.p-3.m-3.col-lg-6.col-md-8.col-10
+      h4.text-center.border-bottom.mb-3.pb-3.text-primary.font-italic You are chatting in room  
+        span.text-success(id="roomkey") #{room}
+      div.bg-light.col-12.p-2(class="msg-container")
+      div.row.mt-3.justify-content-center.px-3
+        div.col-7.col-sm-9.col-md-9.p-0
+          input.form-control.rounded-0(type='text' class='remove-p' id='msg' placeholder='Enter your message...')
+        div.col-5.col-sm-3.col-md-3.p-0
+          button.btn.btn-primary.btn-icon.w-100.rounded-0(type='submit' id='sendMsg')
+            i.fa-solid.fa-paper-plane 
+            |  Send
+  script(src="/socket.io/socket.io.js")
+  script(type='text/javascript' src='/javascripts/websocket.js')
+

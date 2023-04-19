@@ -1,0 +1,41 @@
+extends layout
+
+block content
+    div.row.vh-100.d-flex.justify-content-center.align-items-center
+        div.border.rounded.shadow.p-3.m-3.col-lg-4.col-md-6.col-sm-8.col-10
+            div.row.border-bottom.mb-3.pb-3
+                div.col-12.d-flex.align-items-center.justify-content-between
+                    span
+                    h3.text-primary.m-0.p-0 Selecting a room
+                    a.text-decoration-none.m-0.p-0(href='logout' style='font-size: larger;')
+                        i.fa-solid.fa-right-from-bracket.text-danger
+            if !roomErr && !roomCreated
+                div.alert.alert-info.mb-3 
+                    div Welcome, 
+                        b #{name}
+                    div To start a new chat conversation, please enter in existing room or create new room.
+            if roomErr
+                div.alert.alert-danger.m-0.text-center.mb-3
+                    span.text-danger #{roomErr}
+            if roomCreated
+                div.alert.alert-success.text-center
+                    div New room successfully created.
+                    div Room key is:
+                        h4.p-0.m-0 #{roomKey}
+            input.btn.btn-primary.col-12.mb-3(type='submit' value="Enter in existing room" data-bs-toggle="modal" data-bs-target="#modalEnter")
+            form(action="/room/create" method="post" enctype="multipart/form-data")
+                input.btn.btn-success.col-12(type='submit' value="Create new room")
+    form(action="/room/enter" method="post" enctype="multipart/form-data" autocomplete="off")
+        div.modal.fade#modalEnter(tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true")
+            div.modal-dialog.modal-dialog-centered(role="document")
+                div.modal-content
+                    div.modal-header
+                        h5.modal-title#exampleModalLabel Entering in existing room
+                    div.modal-body
+                        div.form-group
+                            label.form-label.m-0.position-absolute(for='roomKey') Room key
+                            i.fa-solid.fa-key.text-secondary
+                            input.form-control.border-0.border-bottom.rounded-0(type="text" name="roomkey" pattern="[A-Za-z0-9]+" maxlength="6" placeholder='Enter room key...' required)
+                    div.modal-footer
+                        button.btn.btn-secondary(type="button" data-bs-dismiss="modal") Cancel
+                        button.btn.btn-primary(type="submit") Enter

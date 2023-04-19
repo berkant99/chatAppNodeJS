@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  div.row.vh-100.d-flex.justify-content-center.align-items-center
+    form.border.rounded.shadow.p-3.m-3.col-lg-4.col-md-6.col-sm-8.col-10(method="post" autocomplete="off")
+      h3.text-center.border-bottom.mb-3.pb-3.text-primary Sign In
+      if signinErr
+        div.alert.alert-danger.m-0.text-center.mb-3
+          span.text-danger #{signinErr}
+      div.form-group.mb-3
+        label.form-label.m-0.position-absolute(for='email') Email
+        i.fa-solid.fa-envelope.text-secondary
+        input.form-control.border-0.border-bottom.rounded-0(type='email' name='email' value=val.email placeholder='Enter your email...')
+      div.form-group.mb-3
+        label.form-label.m-0.position-absolute(for='password') Password
+        i.fa-solid.fa-lock.text-secondary
+        input.form-control.border-0.border-bottom.rounded-0(type='password' name='password' value=val.password placeholder='Enter your password...')
+      input.btn.btn-primary.col-12.my-3(type='submit' value="Sign in")
+      div.col-12.text-center.text-secondary
+        span Don't have an account yet? Sign up 
+          a.text-decoration-none(href="/signup") here.
